@@ -52,6 +52,7 @@ class DumplingBot(Wechaty):
                     prompt = '，'.join(command[1:])
                     image_url = image_generate_sd(prompt)
                     image = FileBox.from_url(url=image_url, name='AI Generated Image')
+                    await room.ready()
                     await room.say(image)
                 elif command[0] in ('帮助', '说明', '使用说明'):
                     response_text = HELP_TEXT
