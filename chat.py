@@ -1,4 +1,5 @@
 import openai
+import replicate
 
 from config import DEFAULT_PERSONALITY, BOT_NAME_IN_PROMPT, PARTIAL_RESPONSE_INDICATOR, MAX_LENGTH
 
@@ -110,3 +111,20 @@ def gpt_respond(history, personality=None):
     if response_data['finish_reason'] == 'length':
         response_text += PARTIAL_RESPONSE_INDICATOR
     return response_text, response['usage']['completion_tokens']
+
+
+def image_generate_sd(prompt):
+    output = sd_version.predict(
+        prompt=prompt,
+        image_dimensions='768x768',
+        num_outputs=1,
+        num_inference_steps=50, # 1-500
+        guidance_scale=7.5, # 1-20
+        scheduler='DPMSolverMultistep'
+        # seed=,
+    )
+    return output[0]
+
+
+sd_model = replicate.models.get('stability-ai/stable-diffusion')
+sd_version = sd_model.versions.get('db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf')

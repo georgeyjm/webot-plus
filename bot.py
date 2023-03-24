@@ -1,8 +1,7 @@
 import asyncio
 
-from wechaty import Wechaty, MessageType, Contact
+from wechaty import Wechaty, MessageType, Contact, FileBox
 from wechaty.user import Message, Room
-from wechaty_puppet import FileBox
 
 from chat import *
 from config import *
@@ -49,6 +48,11 @@ class DumplingBot(Wechaty):
                     if room_identifier in chat_memory:
                         chat_memory[room_identifier].restart()
                         response_text = 'OK，让我们重新开始。'
+                elif command[0] in ('生成', '生成图片', '图片'):
+                    prompt = '，'.join(command[1:])
+                    image_url = image_generate_sd(prompt)
+                    image = FileBox.from_url(url=image_url, name='AI Generated Image')
+                    await room.say(image)
                 elif command[0] in ('帮助', '说明', '使用说明'):
                     response_text = HELP_TEXT
             else:
