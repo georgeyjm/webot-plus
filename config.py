@@ -13,6 +13,7 @@ HELP_TEXT = f'''
 4. 我确认回复后，无需再 at 我，我会回复群里的每一句话，并会记住同一段对话中的所有发言。
 5. 想结束时，at 我，并说“结束”即可。
 6. 如果想保持人格不变，清除聊天记忆，at 我，并说“重启”即可。
+7. 如果想使用 OpenJourney 生成图片，使用格式 “@{BOT_NAME} 生成，XXXX”。XXXX 需要是英文。
 '''.strip()
 
 PARTIAL_RESPONSE_INDICATOR = '…'
