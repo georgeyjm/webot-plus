@@ -50,7 +50,13 @@ class DumplingBot(Wechaty):
                         response_text = 'OK，让我们重新开始。'
                 elif command[0] in ('生成', '生成图片', '图片'):
                     prompt = '，'.join(command[1:])
-                    image_url = image_generate_sd(prompt)
+                    image_url = replicate_openjourney(prompt)
+                    image = FileBox.from_url(url=image_url, name='AI Generated Image')
+                    await room.ready()
+                    await room.say(image)
+                elif command[0].lower() in ('sd'):
+                    prompt = '，'.join(command[1:])
+                    image_url = replicate_stable_diffusion(prompt)
                     image = FileBox.from_url(url=image_url, name='AI Generated Image')
                     await room.ready()
                     await room.say(image)

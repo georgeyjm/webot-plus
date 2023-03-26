@@ -113,7 +113,7 @@ def gpt_respond(history, personality=None):
     return response_text, response['usage']['completion_tokens']
 
 
-def image_generate_sd(prompt):
+def replicate_stable_diffusion(prompt):
     output = sd_version.predict(
         prompt=prompt,
         image_dimensions='768x768',
@@ -125,6 +125,21 @@ def image_generate_sd(prompt):
     )
     return output[0]
 
+def replicate_openjourney(prompt):
+    output = oj_version.predict(
+        prompt=f'mdjrny-v4 style {prompt}',
+        width=768,
+        height=1024,
+        num_outputs=1,
+        num_inference_steps=50, # 1-500
+        guidance_scale=6, # 1-20
+        # seed=,
+    )
+    return output[0]
+
 
 sd_model = replicate.models.get('stability-ai/stable-diffusion')
 sd_version = sd_model.versions.get('db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf')
+
+oj_model = replicate.models.get('prompthero/openjourney')
+oj_version = oj_model.versions.get('9936c2001faa2194a261c01381f90e65261879985476014a0a37a334593a05eb')
