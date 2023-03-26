@@ -52,14 +52,14 @@ class DumplingBot(Wechaty):
                     prompt = '，'.join(command[1:])
                     await room.say(f'收到，正在生成“{prompt}”')
                     image_url = replicate_openjourney(prompt)
-                    image = FileBox.from_url(url=image_url, name='AI Generated Image')
+                    image = FileBox.from_url(url=image_url, name=image_url.split('/')[-1])
                     await room.ready()
                     await room.say(image)
                 elif command[0].lower() in ('sd'):
                     prompt = '，'.join(command[1:])
                     await room.say(f'收到，正在生成“{prompt}”')
                     image_url = replicate_stable_diffusion(prompt)
-                    image = FileBox.from_url(url=image_url, name='AI Generated Image')
+                    image = FileBox.from_url(url=image_url, name=image_url.split('/')[-1])
                     await room.ready()
                     await room.say(image)
                 elif command[0] in ('帮助', '说明', '使用说明'):
